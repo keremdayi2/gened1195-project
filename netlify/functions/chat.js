@@ -16,13 +16,13 @@ const idxToStrictPrompt = [
 function generatePrompt(ingredients, strictIdx, userMessages) {
     let systemBase = 'You are a helpful assistant helping someone come up with recipes.\n\n\
      They will give you a set of constraints to satisfy when generating your recipe and you should response clearly to their request.\n\n\
-      Make sure you satisfy their constraint!';
+      Make sure you satisfy their constraint! Make sure you reply to the user. Here are the constraints: ';
 
     let ingredientMessage = idxToStrictPrompt[strictIdx];
 
     let ingredientsStr = 'The ingredients are: ' + ingredients.join(', ');
 
-    systemPrompt = systemBase +'\n\n' + ingredientMessage + '\n\n ' + ingredientsStr;
+    systemPrompt = systemBase +'\n\n' + 'INGREDIENT CONSTRAINT: ' + ingredientMessage + '\n\n ' + ingredientsStr;
 
     messages = [
         {role : "system", content : systemPrompt},
@@ -60,14 +60,14 @@ exports.handler = async (event) => {
     ingredients = body.ingredients;
     strictness = body.strictness;
     selectedIngredients = ingredients.filter((item, idx) => item.selected).map((item, idx) => item.name);
-    userHistory = [{role : 'user', content: 'Can you give me a recipe?'}]
+    userHistory = body.history;
 
     messages = generatePrompt(selectedIngredients, strictness, userHistory);
 
     printMessages(messages);
 
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: messages,
       temperature: 0.7,
     });

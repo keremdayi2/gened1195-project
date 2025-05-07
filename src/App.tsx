@@ -1,6 +1,7 @@
 import IngredientList from './components/IngredientList';
 import IngredientConstraintButton from './components/IngredientConstraintButton';
 import { useState } from 'react';
+import ChatbotList from './components/ChatbotList';
 
 const api_key = import.meta.env.VITE_SECRET_API_KEY;
 
@@ -29,7 +30,8 @@ function App() {
       },
       body: JSON.stringify({
         ingredients : ingredients,
-        strictness : strictIdx
+        strictness : strictIdx,
+        history:messages
       })
     });
   
@@ -38,7 +40,8 @@ function App() {
     console.log("Raw response data:", data);
     
     let updatedMessages = [...messages];
-    updatedMessages.push(data);
+    updatedMessages.push({role : data.role, content : data.content});
+    updatedMessages.push({role : 'user', content : ''})
 
     setMessages(updatedMessages);
   };
@@ -53,7 +56,7 @@ function App() {
             <button className='text-amber-700 my-2 hover:text-amber-400 border-1 border-amber-700 rounded-md' onClick={callAPI}>Generate</button>
           </div>
           <div className="flex flex-col w-full items-center m-2 overflow-y-scroll">
-            <p>{messages[messages.length-1].content}</p>
+          <ChatbotList messages={messages} setMessages={setMessages}></ChatbotList>
           </div>
         </div>
       </div>
