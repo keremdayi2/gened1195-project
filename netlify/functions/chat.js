@@ -16,7 +16,9 @@ const idxToStrictPrompt = [
 function generatePrompt(ingredients, strictIdx, userMessages) {
     let systemBase = 'You are a helpful assistant helping someone come up with recipes.\n\n\
      They will give you a set of constraints to satisfy when generating your recipe and you should response clearly to their request.\n\n\
-      Make sure you satisfy their constraint! Make sure you reply to the user. Here are the constraints: ';
+      Make sure you satisfy their constraint! Make sure you reply to the user. \
+      If the user later asks you follow up questions, the priority is what the user asks.\n \
+      Here are the constraints: ';
 
     let ingredientMessage = idxToStrictPrompt[strictIdx];
 
