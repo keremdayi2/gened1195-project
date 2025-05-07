@@ -49,7 +49,7 @@ const IngredientList: React.FC<IngredientListProps> = ({ ingredients, setIngredi
         <input
           className="mx-2"
           type="checkbox"
-          checked={ingredients[idx].selected}
+          checked={selected}
           onChange={() => handleCheckbox(idx)}
         ></input>
         <p>{name}</p>

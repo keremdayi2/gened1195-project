@@ -10,7 +10,7 @@ const IngredientConstraintButton = ( ) => {
     const [strictIdx, setStrictIdx] = useState(0); 
 
     const handleClick = () => {
-        const nextIdx = (strictIdx + 1) % 3;
+        const nextIdx = (strictIdx + 1) % numStates;
         setStrictIdx(nextIdx)
     }
 
