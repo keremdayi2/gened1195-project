@@ -13,9 +13,6 @@ const defaultList = [
 ];
 
 // strictness button
-const idxToStrict : string[] = ['Strict', 'Include', 'Suggest'];
-const idxToColor : string[] = ['text-red-700', 'text-blue-500', 'text-green-500'];
-
 function App() {
   const [ingredients, setIngredients] = useState(defaultList);
   const [strictIdx, setStrictIdx] = useState(0); 

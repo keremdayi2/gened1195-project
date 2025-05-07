@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 type ConstraintProps = {
     strictIdx: number;
     setStrictIdx: React.Dispatch<React.SetStateAction<number>>;

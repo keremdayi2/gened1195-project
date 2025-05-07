@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import IngredientConstraintButton from "./IngredientConstraintButton";
-
 interface Ingredient {
   selected: boolean;
   name: string;
