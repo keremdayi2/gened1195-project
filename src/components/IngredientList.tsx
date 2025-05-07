@@ -60,7 +60,6 @@ const IngredientList: React.FC<IngredientListProps> = ({ ingredients, setIngredi
 
   return (
     <div className='flex flex-col items-center h-full max-h-56 border-1 border-black rounded-md'>
-    <IngredientConstraintButton></IngredientConstraintButton>
       <ul className="flex flex-col items-center w-full h-full overflow-y-scroll">
         {ingredients.map((item, index) =>
           mapListItemToHTML(index, item.selected, item.name)

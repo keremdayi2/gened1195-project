@@ -1,14 +1,15 @@
 import { useState } from "react";
 
+type ConstraintProps = {
+    strictIdx: number;
+    setStrictIdx: React.Dispatch<React.SetStateAction<number>>;
+  };
+
 const idxToStrict : string[] = ['Strict', 'Include', 'Suggest'];
-
 const idxToColor : string[] = ['text-red-700', 'text-blue-500', 'text-green-500'];
-
 const numStates = idxToStrict.length;
 
-const IngredientConstraintButton = ( ) => {
-    const [strictIdx, setStrictIdx] = useState(0); 
-
+const IngredientConstraintButton: React.FC<ConstraintProps> = ({strictIdx, setStrictIdx}) => {
     const handleClick = () => {
         const nextIdx = (strictIdx + 1) % numStates;
         setStrictIdx(nextIdx)
