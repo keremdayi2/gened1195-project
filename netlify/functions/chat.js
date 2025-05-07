@@ -8,6 +8,16 @@ let i = 0;
 
 exports.handler = async (event) => {
   try {
+    const token = event.headers["x-api-key"];
+    
+
+    if (token !== process.env.SECRET_TOKEN) {
+      return {
+        statusCode: 403,
+        body: JSON.stringify({ error: "Invalid API token" }),
+      };
+    }
+
     const body = JSON.parse(event.body);
 
     // const response = await openai.createChatCompletion({
@@ -20,14 +30,14 @@ exports.handler = async (event) => {
     //   statusCode: 200,
     //   body: JSON.stringify(response.data),
     // };
-    i = i+ 1;
-    console.log('test api call.', i);
+    i = i + 1;
+    console.log("test api call.", i);
 
     console.log(body);
     return {
-        statusCode : 200,
-        body: JSON.stringify('Got response.' + i)
-    }
+      statusCode: 200,
+      body: JSON.stringify("Got response." + i),
+    };
   } catch (error) {
     return {
       statusCode: 500,

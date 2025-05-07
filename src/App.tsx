@@ -15,9 +15,12 @@ function App() {
   const callOpenAI = async () => {
     const res = await fetch('/.netlify/functions/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+        'api-key': import.meta.env.SECRET_API_KEY
+      },
       body: JSON.stringify({
-        ingredients : ingredients
+        ingredients : ingredients,
+        
       })
     });
   
