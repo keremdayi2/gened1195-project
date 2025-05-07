@@ -1,7 +1,9 @@
 import { useState } from "react";
 
+import IngredientConstraintButton from "./IngredientConstraintButton";
+
 const defaultList = [
-  { selected: true, name: "Eggs" },
+  { selected: false, name: "Eggs" },
   { selected: false, name: "Bread" },
 ];
 
@@ -51,7 +53,8 @@ const IngredientList = () => {
   };
 
   return (
-    <div className='flex flex-col items-center h-full max-h-44 border-1 border-black rounded-md'>
+    <div className='flex flex-col items-center h-full max-h-56 border-1 border-black rounded-md'>
+    <IngredientConstraintButton></IngredientConstraintButton>
       <ul className="flex flex-col items-center w-full h-full overflow-y-scroll">
         {ingredientList.map((item, index) =>
           mapListItemToHTML(index, item.selected, item.name)
