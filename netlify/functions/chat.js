@@ -8,7 +8,7 @@ let i = 0;
 
 exports.handler = async (event) => {
   try {
-    // const body = JSON.parse(event.body);
+    const body = JSON.parse(event.body);
 
     // const response = await openai.createChatCompletion({
     //   model: "gpt-3.5-turbo",
@@ -22,9 +22,11 @@ exports.handler = async (event) => {
     // };
     i = i+ 1;
     console.log('test api call.', i);
+
+    console.log(body);
     return {
         statusCode : 200,
-        body: JSON.stringify('Got response.')
+        body: JSON.stringify('Got response.' + i)
     }
   } catch (error) {
     return {
