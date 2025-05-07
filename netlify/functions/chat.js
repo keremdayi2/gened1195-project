@@ -8,10 +8,9 @@ let i = 0;
 
 exports.handler = async (event) => {
   try {
-    const token = event.headers["x-api-key"];
-    
-
-    if (token !== process.env.SECRET_TOKEN) {
+    const token = event.headers["api-key"];
+    console.log(token);
+    if (token !== process.env.VITE_SECRET_API_KEY) {
       return {
         statusCode: 403,
         body: JSON.stringify({ error: "Invalid API token" }),

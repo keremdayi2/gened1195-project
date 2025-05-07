@@ -1,6 +1,8 @@
 import IngredientList from './components/IngredientList';
 import { useState } from 'react';
 
+const api_key = import.meta.env.VITE_SECRET_API_KEY;
+
 
 // we lifted the state up so we can make calls here.
 const defaultList = [
@@ -16,7 +18,7 @@ function App() {
     const res = await fetch('/.netlify/functions/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json',
-        'api-key': import.meta.env.SECRET_API_KEY
+        'api-key': api_key
       },
       body: JSON.stringify({
         ingredients : ingredients,
