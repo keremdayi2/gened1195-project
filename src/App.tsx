@@ -1,6 +1,6 @@
 import IngredientList from './components/IngredientList';
 import IngredientConstraintButton from './components/IngredientConstraintButton';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ChatbotList from './components/ChatbotList';
 import DietaryRestrictionList from './components/DietaryRestrictionList';
 import CuisineList from './components/CuisineList';
@@ -37,13 +37,38 @@ const defaultMessages = [{role : 'user', content : 'Generate me a recipe.'}];
 
 // strictness button
 function App() {
-  const [ingredients, setIngredients] = useState(defaultIngredientsList);
-  const [restrictions, setRestrictions] = useState(defaultRestrictionList);
-  const [cuisine, setCuisine] = useState(defaultCuisineList);
+  const [ingredients, setIngredients] = useState(() => {
+    const stored = localStorage.getItem('ingredients');
+    return stored !== null ? JSON.parse(stored) : defaultIngredientsList;
+  });
+  const [restrictions, setRestrictions] = useState(() => {
+    const stored = localStorage.getItem('restrictions');
+    return stored !== null ? JSON.parse(stored) : defaultRestrictionList;
+  });
+  const [cuisine, setCuisine] = useState(() => {
+    const stored = localStorage.getItem('restrictions');
+    return stored !== null ? JSON.parse(stored) : defaultCuisineList;
+  });
 
-  const [strictIdx, setStrictIdx] = useState(0); 
-  const [messages, setMessages] = useState(defaultMessages);
+  const [strictIdx, setStrictIdx] = useState(() => {
+    const stored = localStorage.getItem('strictIdx');
+    return stored !== null ? JSON.parse(stored) : 0;
+  }); 
+  const [messages, setMessages] = useState(() => {
+    const stored = localStorage.getItem('messages');
+    return stored !== null ? JSON.parse(stored) : defaultMessages;
+  });
   
+  // we will use useEffect in order to save the state to local storage
+  // currently, we will save ingredients, restrictions, cuisine
+  useEffect(() => {
+    localStorage.setItem('ingredients', JSON.stringify(ingredients));
+    localStorage.setItem('restrictions', JSON.stringify(restrictions));
+    localStorage.setItem('cuisine', JSON.stringify(cuisine));
+    localStorage.setItem('messages', JSON.stringify(messages));
+    localStorage.setItem('strictIdx', JSON.stringify(strictIdx));
+  }, [ingredients, restrictions, cuisine, messages, strictIdx]);
+
   const callAPI = async () => {
     let placeholderMessages = [...messages];
     placeholderMessages.push({role : 'assistant', content : 'Loading...'});
