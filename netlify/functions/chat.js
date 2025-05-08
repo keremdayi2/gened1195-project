@@ -13,18 +13,23 @@ const idxToStrictPrompt = [
     'You can use the ingredient list as a suggestion. You do not have to be very strict. Try to use the ingredients, but you can add more and you do not have to use all the ingredients. Focus more on making a coherent recipe.'
 ];
 
-function generatePrompt(ingredients, strictIdx, userMessages) {
+function generatePrompt(ingredients, strictIdx, userMessages, restrictions) {
     let systemBase = 'You are a helpful assistant helping someone come up with recipes.\n\n\
      They will give you a set of constraints to satisfy when generating your recipe and you should response clearly to their request.\n\n\
       Make sure you satisfy their constraint! Make sure you reply to the user. \
       If the user later asks you follow up questions, the priority is what the user asks.\n \
       Here are the constraints: ';
 
+    let restrictionsMessage = restrictions.length > 0 ? 'The user specified the following dietary restrictions: ' + restrictions.join(', ')  : 'The user did not specify any dietary restrictions.\n\n';
+
     let ingredientMessage = idxToStrictPrompt[strictIdx];
 
-    let ingredientsStr = 'The ingredients are: ' + ingredients.join(', ');
+    let ingredientsStr = ingredients.length > 0 ? 'The ingredients are: ' + ingredients.join(', ') : 'The user did not specify any ingredients. ';
 
-    systemPrompt = systemBase +'\n\n' + 'INGREDIENT CONSTRAINT: ' + ingredientMessage + '\n\n ' + ingredientsStr;
+    let cuisineStr = cuisine.length > 0 ? 'The user specified the following cuisines to inspire from: ' + cuisine.join(', '): '';
+
+    systemPrompt = systemBase +'\n\n'  + 'INGREDIENT CONSTRAINT: ' + ingredientMessage + '\n\n ' + ingredientsStr + '\n\n'
+    + cuisineStr + '\n\n' + 'DIETARY RESTRICTIONS: ' + restrictionsMessage +'\n\n' ;
 
     messages = [
         {role : "system", content : systemPrompt},
@@ -63,8 +68,11 @@ exports.handler = async (event) => {
     strictness = body.strictness;
     selectedIngredients = ingredients.filter((item, idx) => item.selected).map((item, idx) => item.name);
     userHistory = body.history;
+    restrictions = body.restrictions;
+    restrictions = restrictions.filter((item, idx) => item.selected).map((item, idx) => item.name);
+    cuisine = body.cuisine.filter((item, idx) => item.selected).map((item, idx) => item.name);
 
-    messages = generatePrompt(selectedIngredients, strictness, userHistory);
+    messages = generatePrompt(selectedIngredients, strictness, userHistory, restrictions, cuisine);
 
     printMessages(messages);
 

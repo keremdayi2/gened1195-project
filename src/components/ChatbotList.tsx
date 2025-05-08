@@ -33,11 +33,11 @@ const ChatbotList: React.FC<ChatbotListProps> = ({ messages, setMessages }) => {
       idx < messages.length - 1 ? (
         <Markdown>{message.content}</Markdown>
       ) : (
-        <textarea className="w-full " onChange={handleTextboxChange} placeholder='Generate me a recipe...'></textarea>
+        <textarea className="w-full focus:outline-none focus:ring-0 " onChange={handleTextboxChange} placeholder='Ask AI...'></textarea>
       );
 
     return (
-      <li className={"w-full border-1 " + borderColor + ' rounded-md'} key={idx}>
+      <li className={"w-full border-1 p-2 " + borderColor + ' rounded-md'} key={idx}>
         {inner}
       </li>
     );
