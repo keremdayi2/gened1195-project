@@ -24,7 +24,7 @@ const CuisineList: React.FC<CuisineProps> = ({
 
   const handleItemAdd = () => {
     const updatedList = [...cuisine];
-    updatedList.push({ selected: false, name: inputValue });
+    updatedList.push({ selected: true, name: inputValue });
     setCuisine(updatedList);
     setInputValue("");
   };

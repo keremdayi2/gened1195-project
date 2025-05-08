@@ -22,7 +22,7 @@ const IngredientList: React.FC<IngredientListProps> = ({ ingredients, setIngredi
 
   const handleItemAdd = () => {
     const updatedList = [...ingredients];
-    updatedList.push({ selected: false, name: inputValue });
+    updatedList.push({ selected: true, name: inputValue });
     setIngredients(updatedList);
     setInputValue("");
   };

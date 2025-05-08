@@ -24,7 +24,7 @@ const DietaryRestrictionList: React.FC<DietaryRestrictionProps> = ({
 
   const handleItemAdd = () => {
     const updatedList = [...restrictions];
-    updatedList.push({ selected: false, name: inputValue });
+    updatedList.push({ selected: true, name: inputValue });
     setRestrictions(updatedList);
     setInputValue("");
   };
