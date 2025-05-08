@@ -10,6 +10,8 @@ type ChatbotListProps = {
   setMessages: React.Dispatch<React.SetStateAction<MessageItem[]>>;
 };
 
+const defaultMessages = [{role : 'user', content : 'Generate me a recipe.'}];
+
 const ChatbotList: React.FC<ChatbotListProps> = ({ messages, setMessages }) => {
   const handleTextboxChange = (event: any) => {
     let message = { role: "user", content: event.target.value };
@@ -58,7 +60,11 @@ const ChatbotList: React.FC<ChatbotListProps> = ({ messages, setMessages }) => {
 
   return (
     <div className="flex flex-col w-full items-center m-2 ">
+      
+      <div className='flex flex-row items-center'>
       <h1>Chat History</h1>
+      <button className='mx-2 border-1 rounded-sm px-1 bg-amber-300 text-gray-900 hover:bg-amber-200' onClick={() => setMessages(defaultMessages)}>Reset</button>
+      </div>
       <div className="w-full overflow-y-scroll">
       <ul className="flex flex-col items-baseline">
         {messages.map((item, idx) => messageToHTML(item, idx))}

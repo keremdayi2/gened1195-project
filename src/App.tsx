@@ -33,6 +33,8 @@ const defaultCuisineList = [
 //   {role : 'user', content : 'Test content **test**\n # Testing \n ## Testing' },
 // ];
 
+const defaultMessages = [{role : 'user', content : 'Generate me a recipe.'}];
+
 // strictness button
 function App() {
   const [ingredients, setIngredients] = useState(defaultIngredientsList);
@@ -40,9 +42,7 @@ function App() {
   const [cuisine, setCuisine] = useState(defaultCuisineList);
 
   const [strictIdx, setStrictIdx] = useState(0); 
-
-  const [messages, setMessages] = useState([{role : 'user', content : 'Generate me a recipe.'}]);
-  // const [messages, setMessages] = useState(defaultMessages);
+  const [messages, setMessages] = useState(defaultMessages);
   
   const callAPI = async () => {
     let placeholderMessages = [...messages];
