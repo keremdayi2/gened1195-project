@@ -45,6 +45,10 @@ function App() {
   // const [messages, setMessages] = useState(defaultMessages);
   
   const callAPI = async () => {
+    let placeholderMessages = [...messages];
+    placeholderMessages.push({role : 'assistant', content : 'Loading...'});
+    setMessages([...placeholderMessages]);
+    placeholderMessages.pop();
 
     const res = await fetch('/.netlify/functions/chat', {
       method: 'POST',
@@ -56,15 +60,15 @@ function App() {
         strictness: strictIdx,
         restrictions: restrictions,
         cuisine: cuisine,
-        history: messages
+        history: placeholderMessages
       })
     });
-  
+
     const data = await res.json();
 
-    console.log("Raw response data:", data);
     
-    let updatedMessages = [...messages];
+    console.log("Raw response data:", data);
+    let updatedMessages = [...placeholderMessages];
     updatedMessages.push({role : data.role, content : data.content});
     updatedMessages.push({role : 'user', content : ''})
 

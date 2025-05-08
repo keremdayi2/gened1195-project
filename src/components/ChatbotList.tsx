@@ -30,7 +30,7 @@ const ChatbotList: React.FC<ChatbotListProps> = ({ messages, setMessages }) => {
       message.role === "user" ? "border-amber-500" : "border-gray-500";
 
     const inner =
-      idx < messages.length - 1 ? (
+      (idx < messages.length - 1 || message.role === 'assistant') ? (
         <div className="markdown">
           <Markdown>{message.content}</Markdown>
         </div>
