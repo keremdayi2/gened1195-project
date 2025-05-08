@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import AddItemInput from "./AddItemInput";
+import SelectableListItem from "./SelectableListItem";
+
 interface Ingredient {
   selected: boolean;
   name: string;
@@ -41,42 +44,20 @@ const IngredientList: React.FC<IngredientListProps> = ({ ingredients, setIngredi
     setIngredients(updatedList);
   };
 
-  const mapListItemToHTML = (idx: number, selected: boolean, name: string) => {
-    return (
-      <li className="flex flex-row items-center" key={idx}>
-        <input
-          className="mx-2"
-          type="checkbox"
-          checked={selected}
-          onChange={() => handleCheckbox(idx)}
-        ></input>
-        <p>{name}</p>
-        <button className='text-gray-500 mx-2 hover:text-red-500' onClick={() => handleRemove(idx)}>Remove</button>
-      </li>
-    );
-  };
-
   return (
-    <div className='flex flex-col items-center h-full max-h-56 border-1 border-black rounded-md'>
+    <div className='my-2 flex flex-col items-center h-full max-h-56 border-t border-amber-900 py-1'>
       <ul className="flex flex-col items-center w-full h-full overflow-y-scroll">
-        {ingredients.map((item, index) =>
-          mapListItemToHTML(index, item.selected, item.name)
+        {ingredients.map((item, idx) =>
+          <SelectableListItem
+          key={idx}
+          name={item.name}
+          selected={item.selected}
+          onToggle={() => handleCheckbox(idx)}
+          onRemove={() => handleRemove(idx)}
+        />
         )}
       </ul>
-      <div>
-        <input
-          type="text"
-          value={inputValue}
-          placeholder="Ingredient..."
-          onChange={handleInputChange}
-        ></input>
-        <button
-          className="bg-amber-500 hover:bg-amber-200"
-          onClick={() => handleItemAdd()}
-        >
-          Add
-        </button>
-      </div>
+      <AddItemInput value={inputValue} onChange={handleInputChange} onAdd={() => handleItemAdd()} placeholder="Ingredient..."></AddItemInput>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import Markdown from 'react-markdown';
+import Markdown from "react-markdown";
 
 interface MessageItem {
   role: string;
@@ -27,27 +27,43 @@ const ChatbotList: React.FC<ChatbotListProps> = ({ messages, setMessages }) => {
   const messageToHTML = (message: MessageItem, idx: number) => {
     // const user = message.role === 'user' ? 'You' : 'AI';
     const borderColor =
-      message.role === "user" ? "border-amber-500" : "bolder-gray-500";
+      message.role === "user" ? "border-amber-500" : "border-gray-500";
 
     const inner =
       idx < messages.length - 1 ? (
-        <Markdown>{message.content}</Markdown>
+        <div className="markdown">
+          <Markdown>{message.content}</Markdown>
+        </div>
       ) : (
-        <textarea className="w-full focus:outline-none focus:ring-0 " onChange={handleTextboxChange} placeholder='Ask AI...'></textarea>
+        <textarea
+          className="w-full focus:outline-none focus:ring-0 "
+          onChange={handleTextboxChange}
+          placeholder="Ask AI..."
+        ></textarea>
       );
 
     return (
-      <li className={"w-full border-1 p-2 " + borderColor + ' rounded-md'} key={idx}>
+      <li
+        className={"w-full border-1 p-2 my-2 overflow-y-scroll " + borderColor + " rounded-md"}
+        key={idx}
+      >
+        <div className='flex flex-col'>
+        {idx < messages.length -1 ? <p className='text-gray-900 font-bold text-2xl mb-2'>{message.role === 'user' ? 'You' : 'AI'}</p> : ''}
         {inner}
+        </div>
+        
       </li>
     );
   };
 
   return (
-    <div className="w-full">
+    <div className="flex flex-col w-full items-center m-2 ">
+      <h1>Chat History</h1>
+      <div className="w-full overflow-y-scroll">
       <ul className="flex flex-col items-baseline">
         {messages.map((item, idx) => messageToHTML(item, idx))}
       </ul>
+    </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import IngredientConstraintButton from './components/IngredientConstraintButton'
 import { useState } from 'react';
 import ChatbotList from './components/ChatbotList';
 import DietaryRestrictionList from './components/DietaryRestrictionList';
-import CuisineList from './CuisineList';
+import CuisineList from './components/CuisineList';
 
 const api_key = import.meta.env.VITE_SECRET_API_KEY;
 
@@ -28,6 +28,11 @@ const defaultCuisineList = [
   { selected: false, name: 'Mexican 🇲🇽'},
 ];
 
+// const defaultMessages = [
+//   {role : 'user', content : 'Test content **test**\n # Testing \n ## Testing' },
+//   {role : 'user', content : 'Test content **test**\n # Testing \n ## Testing' },
+// ];
+
 // strictness button
 function App() {
   const [ingredients, setIngredients] = useState(defaultIngredientsList);
@@ -37,8 +42,10 @@ function App() {
   const [strictIdx, setStrictIdx] = useState(0); 
 
   const [messages, setMessages] = useState([{role : 'user', content : 'Generate me a recipe.'}]);
+  // const [messages, setMessages] = useState(defaultMessages);
   
   const callAPI = async () => {
+
     const res = await fetch('/.netlify/functions/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json',
@@ -68,16 +75,15 @@ function App() {
     <>
       <div className="flex h-screen justify-center w-screen">
         <div className="flex flex-row w-full max-w-6xl">
-          <div className="flex flex-col max-w-xs w-full border-r-2 border-amber-800 p-2">
+        {/* <p style={{ fontFamily: '"Inria Serif", serif' }}>Test Inria</p> */}
+          <div className="flex flex-col max-w-xs w-full border-r-1 border-amber-800 p-2">
             <IngredientConstraintButton strictIdx={strictIdx} setStrictIdx={setStrictIdx}></IngredientConstraintButton>
             <IngredientList ingredients={ingredients} setIngredients={setIngredients}></IngredientList>
             <CuisineList cuisine={cuisine} setCuisine={setCuisine}></CuisineList>
             <DietaryRestrictionList restrictions={restrictions} setRestrictions={setRestrictions}></DietaryRestrictionList>
             <button className='text-amber-700 my-2 hover:text-amber-400 border-1 border-amber-700 rounded-md' onClick={callAPI}>Generate</button>
           </div>
-          <div className="flex flex-col w-full items-center m-2 overflow-y-scroll">
           <ChatbotList messages={messages} setMessages={setMessages}></ChatbotList>
-          </div>
         </div>
       </div>
     </>
