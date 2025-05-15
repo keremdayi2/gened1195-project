@@ -46,7 +46,7 @@ function App() {
     return stored !== null ? JSON.parse(stored) : defaultRestrictionList;
   });
   const [cuisine, setCuisine] = useState(() => {
-    const stored = localStorage.getItem('restrictions');
+    const stored = localStorage.getItem('cuisine');
     return stored !== null ? JSON.parse(stored) : defaultCuisineList;
   });
 
